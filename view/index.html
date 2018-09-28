@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+		<title>Message</title>
+	</head>
+	<style type="text/css">
+        body {
+            background-color: #111;
+            font-family: 'Roboto', sans-serif !important;
+            line-height: 20px;
+            font-size: 16px;
+            color: #d0a917;
+            white-space: pre-wrap;
+        }   
+        .prettyprint {
+            padding: 50px 20px 20px 120px !important;
+            border: none !important;
+        }
+	</style>
+	<body>
+        <audio src="i.mp3"></audio>
+
+        <div class="prettyprint">
+            <div style="text-align: center; margin-top: 70px; font-size: 24px">Отправьте сообщение</div>
+        </div>
+        
+		<script src="//code.jquery.com/jquery.js"></script>
+ 		<script src="/socket.io/socket.io.js"></script>
+
+		<script>
+
+            function soundClick() {
+              var audio = new Audio();
+              audio.src = 'i.mp3';
+              audio.autoplay = true;
+            }
+
+            var socket = io();
+            socket.on('eventClient', function (data) {
+                $(".prettyprint").hide('fast').text(data).show('fast');
+                soundClick();
+            });
+
+		</script>
+
+	</body>
+</html>
