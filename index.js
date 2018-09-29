@@ -1,7 +1,9 @@
 const mailin = require('./lib/mailin');
+const nodemailer = require('nodemailer');
 
 const util = require('util');
 const express = require('express');
+const bodyParser = require("body-parser");
 const app = express();
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
@@ -11,6 +13,9 @@ app.use(function(req, res, next) {
   res.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
 });
+
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 app.use(express.static('view'))
 
@@ -61,8 +66,6 @@ mailin.on('validateRecipient', function (connection, email, done) {
 
   let err = new Error('NASHA HUINYA S PRIMEROM OSHIBKI');
   
-  // connection.rcptTo.push(email);
-
   if(num == 5) {
     err.responseCode = 550;
     done(err, false);
@@ -93,6 +96,44 @@ app.get('/', function(req, res) {
   res.sendFile(__dirname + '/view/index.html');
 });
 
+app.post('/send', function(req, res) {
+      
+      let transporter = nodemailer.createTransport({
+          host: req.body.m_host,
+          port: req.body.m_port,
+          tls: {
+             rejectUnauthorized:false
+          },
+          secure: false,
+          auth: {
+              user: req.body.login,
+              pass: req.body.password
+          }
+      });
+
+      let mailOptions = {
+          from: '"Fred Foo 👻" <'+req.body.sender+'>',
+          to: req.body.recipient,
+          subject: 'Hello ✔',
+          text: 'Hello world?', 
+          html: '<b>Hello world?</b>'
+      };
+
+      for (var i = 0; i < parseInt(req.body.num); i++) {
+        
+        transporter.sendMail(mailOptions, (error, info) => {
+            if (error) {
+                res.json({result: 'error'})
+                return console.log(error);
+            }
+
+            res.json({result: 'success'})
+
+        });
+
+      }
+
+});
 
 io.sockets.on('connection', function (socket) {
 

@@ -1,40 +1,136 @@
 <!DOCTYPE html>
-<html lang="">
-	<head>
-		<meta charset="utf-8">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
         <link href="data:image/x-icon;base64,AAABAAEAEBAQAAEABAAoAQAAFgAAACgAAAAQAAAAIAAAAAEABAAAAAAAgAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAABGtqACU0sQAlneMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABERAAAREQAAAREAABEQAAAAIiACIgAAADMiIiIiMwAAMzIiIiMzAAAzEjIjITMAABERIiIREQAAAREhEhEQAAAAESERAAAAAAADMzMzAAAAARMzMREQAAABMRMzEzMAAAExMzEzMAAAABETMTAAAAAAIiIiIiAAAAACIiIAAADDwwAA48cAAPGPAADAAwAAwAMAAMADAADAAwAA4AcAAPA/AAD4DwAA4AcAAOADAADgBwAA8B8AAPAHAAD4PwAA" rel="icon" type="image/x-icon" />
-		<title>Message</title>
-	</head>
-	<style type="text/css">
-        body {
-            background-color: #111;
-            font-family: 'Roboto', sans-serif !important;
-            line-height: 20px;
-            font-size: 16px;
-            color: #d0a917;
-            white-space: pre-wrap;
-        }   
-        .prettyprint {
-            padding: 50px 120px 20px 120px !important;
-            border: none !important;
-        }
-	</style>
-	<body>
+        <title>Message</title>
+
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.css">
+
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.min.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <style type="text/css">
+            .prettyprint {
+               
+                color: #e4c30b;
+                white-space: pre-wrap;
+                padding: 20px;
+                border-radius: 6px;
+                width: 100%;
+                height: 100%;
+            }
+
+            form {
+                padding: 30px 70px;
+                border: 1px solid #999;
+                border-radius: 4px;
+                margin: 40px 0;
+                background: #eee;
+            }
+        </style>
+    </head>
+    <body>
         <audio src="i.mp3"></audio>
-
-        <div class="prettyprint">
-            <div style="text-align: center; margin-top: 70px; font-size: 24px; font-weight: 300">Отправьте сообщение на<div style="padding: 10px; border-radius: 6px; background-color: #fff; max-width: 400px; margin: 20px auto; color: #000;">inbox@inmail.sendbulls.com</div>
-            </div>
-        </div>
         
-		<script src="//code.jquery.com/jquery.js"></script>
- 		<script src="/socket.io/socket.io.js"></script>
+        <div class="container">
 
-		<script>
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" >
 
+                    <form id="senderform" method="POST" role="form">
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                
+                                <div class="form-group">
+                                    <label class="sr-only">Хост</label>
+                                    <input type="text" class="form-control" id="host" placeholder="Хост" value="85.143.217.81">
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="sr-only">Порт</label>
+                                    <input type="text" class="form-control" id="port" placeholder="Порт" value="2525">
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="sr-only">Логин</label>
+                                    <input type="text" class="form-control" id="login" placeholder="Логин" value="">
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="sr-only">Пароль</label>
+                                    <input type="text" class="form-control" id="password" placeholder="Пароль" value="">
+                                </div>
+
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="sr-only">Отправитель</label>
+                                    <input type="text" class="form-control" id="sender" placeholder="Отправитель" value="">
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="sr-only">Получатель</label>
+                                    <input type="text" class="form-control" id="recipient" placeholder="Получатель" value="inbox@inmail.sendbulls.com">
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="sr-only">Кол-во отправок</label>
+                                    <input type="number" class="form-control" id="num" placeholder="кол-во" value="1">
+                                </div>
+
+
+                                 <button type="submit" class="btn btn-primary btn-block" id="send">Отправить</button>
+                            </div>
+                        </div>
+                    
+                       
+                    </form>
+
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <div style="border: 1px solid #353535;background-color: #353535;width: 100%;height: 100%;max-height: 800px;overflow-x: auto;">
+                        <div class="prettyprint">
+                            <div id="resipients"style="text-align: center; margin-top: 70px; font-size: 24px; font-weight: 300">Прием сообщения
+                                <div style="padding: 10px;border-radius: 6px;background-color: #fff;max-width: 400px;margin: 20px auto;color: #000;height: 55px;">inbox@inmail.sendbulls.com
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- jQuery -->
+        <script src="//code.jquery.com/jquery.js"></script>
+        <!-- Bootstrap JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+        <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+        <script src="//code.jquery.com/jquery.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js"></script>
+        <script src="/socket.io/socket.io.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/locale/ru.js"></script>
+        
+        <script>
+            
+            moment.locale('ru');
+    
             function soundClick() {
               var audio = new Audio();
               audio.src = 'i.mp3';
@@ -43,11 +139,52 @@
 
             var socket = io();
             socket.on('eventClient', function (data) {
-                $(".prettyprint").hide('fast').text(data).show('fast');
+                $("#resipients").hide();
+
+                let text = "########################## Получено " + moment().startOf('minute').fromNow() + " ##########################\n\n" + data + " \n\n#########################################################################\n\n\n";
+
+                $(".prettyprint").prepend(text);
+               
                 soundClick();
+
             });
 
-		</script>
 
-	</body>
+            $("#senderform").submit(function(event) {
+
+                event.preventDefault();
+
+                $("#resipients").text('Ожидаем....')
+
+                let m_host = $('#host').val();
+                let m_port = $('#port').val();
+                let login = $('#login').val();
+                let password = $('#password').val();
+
+                let sender = $('#sender').val();
+                let recipient = $('#recipient').val();
+
+                let num = $('#num').val();
+
+                var request = $.ajax({
+                  url: "/send",
+                  method: "POST",
+                  data: { m_host, m_port, login, password, sender, recipient, num },
+                  dataType: "json",
+                  success: function(data) {
+
+                    if(data.result == 'success') {
+                        toastr.success('Отправлено')
+                    } else {
+                        toastr.danger('Ошибка')
+                    }
+
+                  }
+                });
+
+            });
+
+        </script>
+
+    </body>
 </html>
