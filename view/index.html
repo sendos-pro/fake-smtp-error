@@ -20,6 +20,7 @@
         <![endif]-->
 
         <style type="text/css">
+        
             .prettyprint {
                
                 color: #e4c30b;
@@ -31,12 +32,18 @@
             }
 
             form {
-                padding: 30px 70px;
+                padding: 21px 70px 10px;
                 border: 1px solid #999;
                 border-radius: 4px;
                 margin: 40px 0;
                 background: #eee;
             }
+            .form-group {
+                margin-bottom: 15px;
+                width: 24%;
+                display: inline-block;
+            }
+
         </style>
     </head>
     <body>
@@ -47,11 +54,12 @@
             <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" >
 
-                    <form id="senderform" method="POST" role="form">
+                    <form id="senderform" method="POST" role="form" class="">
                         
-                        <div class="row">
-                            <div class="col-md-6">
-                                
+                            <div class="row">
+                                <div class="col-md-12">
+                                    
+                             
                                 <div class="form-group">
                                     <label class="sr-only">Хост</label>
                                     <input type="text" class="form-control" id="host" placeholder="Хост" value="85.143.217.81">
@@ -71,10 +79,12 @@
                                     <label class="sr-only">Пароль</label>
                                     <input type="text" class="form-control" id="password" placeholder="Пароль" value="">
                                 </div>
-
+                   </div>
                             </div>
 
-                            <div class="col-md-6">
+                            <div class="row">
+                                    <div class="col-md-12">
+                            
                                 <div class="form-group">
                                     <label class="sr-only">Отправитель</label>
                                     <input type="text" class="form-control" id="sender" placeholder="Отправитель" value="">
@@ -89,12 +99,13 @@
                                     <label class="sr-only">Кол-во отправок</label>
                                     <input type="number" class="form-control" id="num" placeholder="кол-во" value="1">
                                 </div>
-
-
+                                <div class="form-group">
                                  <button type="submit" class="btn btn-primary btn-block" id="send">Отправить</button>
+                                </div>
+                                </div>
                             </div>
-                        </div>
                     
+                                
                        
                     </form>
 
@@ -141,7 +152,7 @@
             socket.on('eventClient', function (data) {
                 $("#resipients").hide();
 
-                let text = "########################## Получено " + moment().startOf('minute').fromNow() + " ##########################\n\n" + data + " \n\n#########################################################################\n\n\n";
+                let text = "########################## Получено " + moment().startOf('minute').fromNow() + " ##########################\n\n" + data + " \n\n##################################################################################\n\n\n";
 
                 $(".prettyprint").prepend(text);
                
